@@ -26,15 +26,15 @@ gulp.task('doc', function() {
 
   gulp.src([
       'README.md',
-      'http_error.js',
-      'project.js'
+      'project.js',
+      'factory/github.js'
     ])
     .pipe(jsdoc.parser())
     .pipe(jsdoc.generator('./doc', tpl, opts));
 });
 
 gulp.task('watch', function() {
-  gulp.watch('*.js', ['doc']);
+  gulp.watch(['*.js', 'factory/*.js'], ['doc']);
 });
 
 gulp.task('default', ['doc']);
