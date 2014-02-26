@@ -118,7 +118,7 @@ suite('project', function() {
 
     setup(function() {
       buildNock().
-        post(path('job/')).
+        post(path('jobs/')).
         reply(200, {});
 
       return subject.postJobs(jobs);
@@ -131,8 +131,10 @@ suite('project', function() {
       );
 
       buildNock().
-        get(path('job/')).
-        reply(200, jobs);
+        get(path('jobs/')).
+        reply(200, [{
+          job_guid: jobs[0].job.job_guid
+        }]);
 
       return subject.getJobs().then(function(items) {
         var hasJob = items.some(function(item) {
