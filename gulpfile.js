@@ -33,4 +33,8 @@ gulp.task('doc', function() {
     .pipe(jsdoc.generator('./doc', tpl, opts));
 });
 
+gulp.task('watch', function() {
+  gulp.watch('*.js', ['doc']);
+});
+
 gulp.task('default', ['doc']);

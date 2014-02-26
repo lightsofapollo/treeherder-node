@@ -71,16 +71,12 @@ function handleResponse(res) {
 
 /**
 
-```js
-
+@example
 var Project = require('mozilla-treeherder/project');
 var project = new Project('gaia', {
   consumerKey: 'key',
-  consumerSecret: 'yes'
+  consumerSecret: 'secret'
 });
-
-```
-
 
 @param {String} project name.
 @param {Object} config for project.
@@ -144,6 +140,29 @@ Project.prototype = {
 
   /**
   Update or create a resultset.
+
+  @example
+
+  var resultset = [{
+    revision_hash: '435323',
+    // it's in seconds
+    push_timestamp: 111111
+    type: 'push',
+    revisions: [{
+      comment: 'I did stuff',
+      files: [
+        'dom/foo/bar',
+      ],
+      revision: '23333',
+      // this must match the project name
+      repository: 'gaia',
+      author: 'jlal@mozilla.com'
+    }]
+  }];
+
+  project.postResultset(resultset).then(function(result) {
+    // ...
+  });
 
   @see http://treeherder-dev.allizom.org/docs/#!/project/Result_Set_post_9
   @param {Object} resultset full resultset object.
