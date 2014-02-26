@@ -48,14 +48,14 @@ suite('project', function() {
     });
   });
 
-  suite('#postResultset', function() {
+  function setupResultset() {
     var resultset = [{
       revision_hash: uuid.v4(),
       // it's in seconds
       push_timestamp: Date.now() / 1000,
       type: 'push',
       revisions: [{
-        comment: 'I did stuff',
+        comment: 'new job',
         files: [
           'dom/foo/bar',
         ],
@@ -73,6 +73,12 @@ suite('project', function() {
       return subject.postResultset(resultset);
     });
 
+    return resultset;
+  }
+
+  suite('#postResultset', function() {
+    var resultset = setupResultset();
+
     test('ensure resultset is saved', function() {
       buildNock().
         get(path('resultset/')).
@@ -83,6 +89,56 @@ suite('project', function() {
           return item.revision_hash === resultset[0].revision_hash;
         });
         assert.ok(hasResultset, 'saves item as a resultset');
+      });
+    });
+  });
+
+
+  suite('#postJob', function() {
+    var resultset = setupResultset();
+
+    var jobs = [{
+      'project': 'gaia',
+      'revision_hash': resultset[0].revision_hash,
+      'job': {
+        'job_guid': uuid.v4(),
+        'name': 'Testing gaia',
+        'reason': 'scheduler',
+        'job_symbol': '?',
+        'submit_timestamp': 1387221298,
+        'start_timestamp': 1387221345,
+        'end_timestamp': 1387222817,
+        'state': 'pending',
+        'log_references': [],
+        'option_collection': {
+          'opt': true
+        }
+      }
+    }];
+
+    setup(function() {
+      buildNock().
+        post(path('job/')).
+        reply(200, {});
+
+      return subject.postJobs(jobs);
+    });
+
+    test('ensure job is saved', function() {
+      assert.equal(
+        resultset[0].revision_hash,
+        jobs[0].revision_hash
+      );
+
+      buildNock().
+        get(path('job/')).
+        reply(200, jobs);
+
+      return subject.getJobs().then(function(items) {
+        var hasJob = items.some(function(item) {
+          return item.job_guid === jobs[0].job.job_guid;
+        });
+        assert.ok(hasJob, 'saves job');
       });
     });
   });

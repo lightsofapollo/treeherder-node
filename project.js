@@ -175,10 +175,47 @@ Project.prototype = {
   /**
   Fetch all the objectstore results for this project.
   @return {Promise<Array>}
+  @see http://treeherder-dev.allizom.org/docs/#!/project/Jobs_get_5
   */
-  getObjectstore: function() {
-    return this.request('GET', 'objectstore/').then(handleResponse);
+  getJobs: function() {
+    return this.request('GET', 'jobs/').then(handleResponse);
+  },
+
+  /**
+  Post a set of jobs.
+
+  @example
+
+  project.postJobs([
+    'project': 'gaia',
+    'revision_hash': 'sabc'
+    'job': {
+      'job_guid': 'unique_guid',
+      'name': 'Testing gaia',
+      'reason': 'scheduler',
+      'job_symbol': '?',
+      'submit_timestamp': 1387221298,
+      'start_timestamp': 1387221345,
+      'end_timestamp': 1387222817,
+      'state': 'pending',
+      'log_references': [],
+
+      // You _must_ pass option collection until
+      // https://github.com/mozilla/treeherder-service/issues/112
+      'option_collection': {
+        'opt': true
+      }
+    }
+  ]);
+
+  @return {Promise<Object>}
+  @param {Object} jobs collection.
+  @see http://treeherder-dev.allizom.org/docs/#!/project/Jobs_post_4
+  */
+  postJobs: function(jobs) {
+    return this.request('POST', 'jobs/', jobs).then(handleResponse);
   }
+
 };
 
 module.exports = Project;
