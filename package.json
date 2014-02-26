@@ -4,7 +4,8 @@
   "description": "Treeherder client for mozilla's test reporting UI",
   "main": "client.js",
   "scripts": {
-    "test": "make test"
+    "test": "make test",
+    "doc": "./node_modules/.bin/gulp doc"
   },
   "repository": {
     "type": "git",
