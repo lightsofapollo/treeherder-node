@@ -1,0 +1,41 @@
+{
+  "name": "mozilla-treeherder",
+  "version": "0.0.0",
+  "description": "Treeherder client for mozilla's test reporting UI",
+  "main": "client.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lightsofapollo/treeherder-node.git"
+  },
+  "keywords": [
+    "mozilla",
+    "treeherder",
+    "test",
+    "ui",
+    "reporting"
+  ],
+  "author": "James Lal [:lightsofapollo]",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lightsofapollo/treeherder-node/issues"
+  },
+  "homepage": "https://github.com/lightsofapollo/treeherder-node",
+  "devDependencies": {
+    "mocha-as-promised": "~2.0.0",
+    "mocha": "~1.17.1",
+    "nock": "~0.27.2",
+    "gulp": "~3.5.2",
+    "gulp-jsdoc": "0.0.2",
+    "uuid": "~1.4.1"
+  },
+  "dependencies": {
+    "promise": "~4.0.0",
+    "superagent": "~0.16.0",
+    "superagent-promise": "0.0.0",
+    "oauth": "~0.9.11",
+    "swagger-client": "~1.0"
+  }
+}
