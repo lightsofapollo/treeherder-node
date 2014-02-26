@@ -10,5 +10,6 @@ deploy:
   bucket: lightsofapollo-oss
   local-dir: doc
   upload-dir: mozilla-treeherder
+  skip_cleanup: true
   on:
     repo: lightsofapollo/treeherder-node
