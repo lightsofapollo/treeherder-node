@@ -15,6 +15,14 @@ var project = new Project('gaia', {
 });
 ```
 
+## CLI
+
+See all the options with:
+
+```sh
+./bin/treeherder --help
+```
+
 ## Tests
 
 (you must run npm install first)

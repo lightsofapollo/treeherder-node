@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "Treeherder client for mozilla's test reporting UI",
   "main": "project.js",
+  "bin": {
+    "treeherder": "./bin/treeherder"
+  },
   "scripts": {
     "test": "./node_modules/.bin/mocha *_test.js",
     "doc": "./node_modules/.bin/gulp doc"
@@ -31,12 +34,13 @@
     "gulp": "~3.5.2",
     "gulp-jsdoc": "0.0.2",
     "uuid": "~1.4.1",
-    "github-fixtures": "~0.1.0"
+    "github-fixtures": "~0.1.1"
   },
   "dependencies": {
     "promise": "~4.0.0",
     "superagent": "~0.16.0",
     "superagent-promise": "0.0.0",
-    "oauth": "~0.9.11"
+    "oauth": "~0.9.11",
+    "commander": "~2.1.0"
   }
 }

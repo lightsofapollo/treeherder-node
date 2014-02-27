@@ -14,7 +14,7 @@ function commitToRev(repository, record) {
   var author = record.commit.author;
   return {
     comment: record.commit.message,
-    revision: record.sha1,
+    revision: record.sha,
     repository: repository,
     author: author.name + ' <' + author.email + '>'
   };
@@ -52,7 +52,7 @@ function pull(repository, githubPr) {
   timestamp = timestamp.valueOf() / 1000;
 
   return {
-    revision_hash: githubPr.url,
+    revision_hash: githubPr.html_url,
     push_timestamp: timestamp,
     // XXX: not sure what the purpose of this or what other values we
     //      can expect...

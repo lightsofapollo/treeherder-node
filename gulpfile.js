@@ -27,6 +27,7 @@ gulp.task('doc', function() {
   gulp.src([
       'README.md',
       'project.js',
+      'github.js',
       'factory/github.js'
     ])
     .pipe(jsdoc.parser())

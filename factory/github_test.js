@@ -9,7 +9,7 @@ suite('github', function() {
     var author = record.commit.author;
     return {
       comment: record.commit.message,
-      revision: record.sha1,
+      revision: record.sha,
       repository: REPO,
       author: author.name + ' <' + author.email + '>'
     };
@@ -21,7 +21,7 @@ suite('github', function() {
     test('pull request', function() {
       var result = subject.pull(REPO, pr);
       assert.deepEqual(result, {
-        revision_hash: pr.url,
+        revision_hash: pr.html_url,
         // created at in seconds
         push_timestamp: (new Date(pr.created_at)).valueOf() / 1000,
         type: 'push'
