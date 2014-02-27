@@ -38,7 +38,11 @@
     "grunt": "~0.4.2",
     "grunt-jsdoc": "~0.5.1",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-cli": "~0.1.13"
+    "grunt-cli": "~0.1.13",
+    "github": "~0.1.14"
+  },
+  "peerDependencies": {
+    "github": "~0.1.14"
   },
   "dependencies": {
     "promise": "~4.0.0",
