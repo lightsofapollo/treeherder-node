@@ -4,9 +4,11 @@
 	},
 	"plugins": ["plugins/markdown"],
 	"templates": {
+    "default": {
+      "outputSourceFiles": true
+    },
 		"cleverLinks": true,
 		"monospaceLinks": true,
-    "outputSourceFiles": true,
 		"systemName": "mozilla-treeherder",
 		"footer": "",
 		"navType": "vertical",
