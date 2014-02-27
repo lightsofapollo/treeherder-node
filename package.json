@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha *_test.js",
-    "doc": "./node_modules/.bin/grunt doc"
+    "doc": "./node_modules/.bin/grunt jsdoc"
   },
   "repository": {
     "type": "git",
