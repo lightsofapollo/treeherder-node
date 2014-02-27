@@ -72,6 +72,7 @@ function handleResponse(res) {
 /**
 
 @example
+
 var Project = require('mozilla-treeherder/project');
 var project = new Project('gaia', {
   consumerKey: 'key',

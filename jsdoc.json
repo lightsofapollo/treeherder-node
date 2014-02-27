@@ -1,0 +1,20 @@
+{
+	"tags": {
+		"allowUnknownTags": true
+	},
+	"plugins": ["plugins/markdown"],
+	"templates": {
+		"cleverLinks": true,
+		"monospaceLinks": true,
+    "outputSourceFiles": true,
+		"systemName": "mozilla-treeherder",
+		"footer": "",
+		"navType": "vertical",
+		"theme": "spacelab",
+    "linenums": true
+	} ,
+	"markdown": {
+		"parser": "gfm",
+		"hardwrap": true
+	}
+}

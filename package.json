@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha *_test.js",
-    "doc": "./node_modules/.bin/gulp doc"
+    "doc": "./node_modules/.bin/grunt doc"
   },
   "repository": {
     "type": "git",
@@ -31,10 +31,14 @@
     "mocha-as-promised": "~2.0.0",
     "mocha": "~1.17.1",
     "nock": "~0.27.2",
-    "gulp": "~3.5.2",
-    "gulp-jsdoc": "0.0.2",
     "uuid": "~1.4.1",
-    "github-fixtures": "~0.1.1"
+    "github-fixtures": "~0.1.1",
+    "jsdoc": "~3.3.0-alpha4",
+    "ink-docstrap": "~0.3.0-0",
+    "grunt": "~0.4.2",
+    "grunt-jsdoc": "~0.5.1",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-cli": "~0.1.13"
   },
   "dependencies": {
     "promise": "~4.0.0",
