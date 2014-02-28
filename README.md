@@ -1,6 +1,6 @@
 # mozilla-treeherder [![Build Status](https://travis-ci.org/lightsofapollo/treeherder-node.png?branch=master)](https://travis-ci.org/lightsofapollo/treeherder-node)
 
-NodeJS interface for [treeherder](treeherder-dev.allizom.org).
+NodeJS interface for [treeherder](http://treeherder-dev.allizom.org).
 
 ## Usage
 
