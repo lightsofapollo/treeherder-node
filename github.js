@@ -10,28 +10,7 @@ var factory = require('./factory/github');
 
 var Promise = require('promise');
 
-/**
-@example
-
-// build a resultset from a pull request
-var Github = require('github');
-var treeherderGithub = require('mozilla-treeherder/github');
-
-var github = new Github({ version: '3.0.0' });
-
-// project name for treeherder
-var treeherderProject = 'gaia';
-
-treeherderGithub.pull(treeherderProject, {
-  github: github,
-  user: 'mozilla-b2g',
-  repo: 'gaia',
-  number: 16677
-}).then(function(resultset) {
-  // treeherder compliant resultset from the pull request
-});
-
-
+/*
 @param {String} repository for pull request result in treeherder.
 @param {Object} options to configure pull request -> resultset.
 @param {Object} options.github object from the `github` module.
@@ -66,7 +45,7 @@ function pull(repository, options) {
       number: options.number
     });
   }).then(function(commits) {
-    resulset.revisions = factory.commits(repository, commits);
+    resulset.revisions = factory.pullCommits(repository, commits);
     return resulset;
   });
 }

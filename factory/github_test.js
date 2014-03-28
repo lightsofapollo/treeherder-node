@@ -15,6 +15,26 @@ suite('github', function() {
     };
   }
 
+  test('#pushCommits', function() {
+    var pushWithCommits = require('../test/fixtures/push_with_commits');
+
+    var result =
+      subject.pushCommits(REPO, pushWithCommits.commits);
+
+    var head = pushWithCommits.head_commit;
+    assert.deepEqual(
+      [
+        {
+          comment: head.message,
+          revision: head.id,
+          repository: REPO,
+          author: head.author.name + ' <' + head.author.email + '>'
+        }
+      ],
+      result
+    );
+  });
+
   suite('#pull', function() {
     var pr = PullRequest.create();
 
@@ -39,7 +59,7 @@ suite('github', function() {
 
     test('multiple commits', function() {
       assert.deepEqual(
-        subject.commits(REPO, commits),
+        subject.pullCommits(REPO, commits),
         expected
       );
     });

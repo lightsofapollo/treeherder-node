@@ -7,16 +7,31 @@ types.
 @module mozilla-treeherder/factory/github
 */
 
+function ghAuthorToThAuthor(author) {
+  return author.name + ' <' + author.email + '>'
+}
+
 /**
 @private
 */
 function commitToRev(repository, record) {
-  var author = record.commit.author;
   return {
     comment: record.commit.message,
     revision: record.sha,
     repository: repository,
-    author: author.name + ' <' + author.email + '>'
+    author: ghAuthorToThAuthor(record.commit.author)
+  };
+}
+
+/**
+@private
+*/
+function pushCommitToRev(repository, record) {
+  return {
+    comment: record.message,
+    revision: record.id,
+    repository: repository,
+    author: ghAuthorToThAuthor(record.author)
   };
 }
 
@@ -28,18 +43,28 @@ var commitsFromGithub = [
   // http://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 ]
 
-factory.commits('gaia', commitsFromGithub);
+factory.pullCommits('gaia', commitsFromGithub);
 
 @see http://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 @param {String} repository name of the project.
 @param {Array<Object>} list of github commits.
 @return {Array} 'revsions' portion of a resultset collection.
 */
-function commits(repository, list) {
+function pullCommits(repository, list) {
   return list.map(commitToRev.bind(this, repository));
 }
 
-module.exports.commits = commits;
+module.exports.pullCommits = pullCommits;
+
+/**
+@param {String} repository which treeherder results belong to.
+@param {Object} list of commits from github push event.
+*/
+function pushCommits(repository, list) {
+  return list.map(pushCommitToRev.bind(this, repository));
+}
+
+module.exports.pushCommits = pushCommits;
 
 /**
 @param {Object} githubPr pull request object.

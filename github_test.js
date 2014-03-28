@@ -11,6 +11,10 @@ suite('github', function() {
     nock.enableNetConnect();
   });
 
+  suite('#push', function() {
+    
+  });
+
   suite('#pull', function() {
     setup(function() {
       // don't load the fixtures unless nock is on
