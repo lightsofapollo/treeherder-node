@@ -77,7 +77,6 @@ function pull(repository, githubPr) {
   timestamp = timestamp.valueOf() / 1000;
 
   return {
-    revision_hash: githubPr.html_url,
     push_timestamp: timestamp,
     // XXX: not sure what the purpose of this or what other values we
     //      can expect...

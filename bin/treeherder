@@ -26,10 +26,6 @@ program.
       console.log('  github: %s/%s #%s', config.user, config.repo, config.number);
     }
 
-    config.github = new Github({
-      version: '3.0.0'
-    });
-
     var githubToResultset = require('../github').pull;
 
     githubToResultset(project, config).then(function(result) {

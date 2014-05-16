@@ -1,6 +1,5 @@
 suite('github', function() {
   var nock = require('nock');
-  var Github = require('github');
   var subject = require('./github');
 
   suiteSetup(function() {
@@ -12,7 +11,6 @@ suite('github', function() {
   });
 
   suite('#push', function() {
-    
   });
 
   suite('#pull', function() {
@@ -26,7 +24,6 @@ suite('github', function() {
 
     // taken directly from github
     var expected = {
-      "revision_hash": "https://github.com/mozilla-b2g/gaia/pull/16677",
       "push_timestamp": 1393450332,
       "type": "push",
       "revisions": [
@@ -40,9 +37,7 @@ suite('github', function() {
     };
 
     test('resultset', function() {
-      var github = new Github({ version: '3.0.0' });
       var config = {
-        github: github,
         user: 'mozilla-b2g',
         repo: 'gaia',
         number: 16677

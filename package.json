@@ -38,17 +38,14 @@
     "grunt": "~0.4.2",
     "grunt-jsdoc": "~0.5.1",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-cli": "~0.1.13",
-    "github": "~0.1.14"
-  },
-  "peerDependencies": {
-    "github": "~0.1.14"
+    "grunt-cli": "~0.1.13"
   },
   "dependencies": {
+    "github": "~0.1.14",
+    "commander": "~2.1.0",
+    "oauth": "~0.9.11",
     "promise": "~4.0.0",
     "superagent": "~0.16.0",
-    "superagent-promise": "0.0.0",
-    "oauth": "~0.9.11",
-    "commander": "~2.1.0"
+    "superagent-promise": "0.0.0"
   }
 }
