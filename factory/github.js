@@ -73,11 +73,15 @@ module.exports.pushCommits = pushCommits;
 */
 function pull(repository, githubPr) {
   // created in seconds
-  var timestamp = new Date(githubPr.created_at);
+  var timestamp = new Date(
+    (githubPr.updated_at || githubPr.created_at)
+  );
   timestamp = timestamp.valueOf() / 1000;
 
   return {
+    revision_hash: githubPr.head.sha,
     push_timestamp: timestamp,
+    author: githubPr.head.user.login,
     // XXX: not sure what the purpose of this or what other values we
     //      can expect...
     type: 'push'

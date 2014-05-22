@@ -23,8 +23,10 @@ suite('github', function() {
     });
 
     // taken directly from github
-    var expected = {
+    var expected =   {
+      "revision_hash": "7b5d85f9cd3787ca3175470a84a9ffe6f1b01872",
       "push_timestamp": 1393450332,
+      "author": "justindarc",
       "type": "push",
       "revisions": [
         {

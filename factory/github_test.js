@@ -41,9 +41,10 @@ suite('github', function() {
     test('pull request', function() {
       var result = subject.pull(REPO, pr);
       assert.deepEqual(result, {
-        revision_hash: pr.html_url,
+        revision_hash: pr.head.sha,
+        author: pr.head.user.login,
         // created at in seconds
-        push_timestamp: (new Date(pr.created_at)).valueOf() / 1000,
+        push_timestamp: (new Date(pr.updated_at)).valueOf() / 1000,
         type: 'push'
       });
     });

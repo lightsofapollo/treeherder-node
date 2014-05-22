@@ -7,7 +7,7 @@
     "treeherder": "./bin/treeherder"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha *_test.js",
+    "test": "./node_modules/.bin/mocha *_test.js factory/*_test.js",
     "doc": "./node_modules/.bin/grunt jsdoc"
   },
   "repository": {
