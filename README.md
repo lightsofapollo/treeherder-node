@@ -1,6 +1,6 @@
 # mozilla-treeherder [![Build Status](https://travis-ci.org/lightsofapollo/treeherder-node.png?branch=master)](https://travis-ci.org/lightsofapollo/treeherder-node)
 
-NodeJS interface for [treeherder](http://treeherder-dev.allizom.org).
+NodeJS interface for [treeherder](https://treeherder.mozilla.org).
 
 ## Usage
 
@@ -25,11 +25,11 @@ See all the options with:
 
 ## Reporting Treeherder bugs
 
-[treeherder](https://github.com/mozilla/treeherder-service) api errors will
+[treeherder-service](https://github.com/mozilla/treeherder-service) api errors will
 include a traceback from the server. Most times these errors are simply
 something you did wrong (no oauth credentials, wrong parameters, etc...)
 but there are times when there are actually bugs in treeherder... Submit
-an [issue](https://github.com/mozilla/treeherder-service/issues) with the traceback.
+an [issue](https://bugzilla.mozilla.org/enter_bug.cgi?product=Tree%20Management&component=Treeherder) with the traceback.
 
 Example error message (send as a promise rejection usually)
 
