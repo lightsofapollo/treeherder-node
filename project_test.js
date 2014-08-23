@@ -27,8 +27,8 @@ suite('project', function() {
 
   setup(function() {
     subject = new Project(PROJECT_NAME, {
-      consumerKey: 'fee2fbb3-3b18-4731-b5f2-083511c49516',
-      consumerSecret: 'bb1a0697-5d59-4462-91ab-f00ccd049f18'
+      consumerKey: '3d3809b2-f656-4e24-ac10-3590e5cc4214',
+      consumerSecret: 'e5dfb0b2-6559-4216-864b-bb87b51b4e10'
     });
   });
 
@@ -41,10 +41,10 @@ suite('project', function() {
   test('#getResultset', function() {
     var mock = buildNock().
                  get(path('resultset/')).
-                 reply(200, []);
+                 reply(200, { results: [] });
 
-    return subject.getResultset().then(function(list) {
-      assert.ok(Array.isArray(list));
+    return subject.getResultset().then(function(search) {
+      assert.ok(Array.isArray(search.results));
     });
   });
 
@@ -82,10 +82,10 @@ suite('project', function() {
     test('ensure resultset is saved', function() {
       buildNock().
         get(path('resultset/')).
-        reply(200, resultset);
+        reply(200, { results: resultset });
 
-      return subject.getResultset().then(function(items) {
-        var hasResultset = items.some(function(item) {
+      return subject.getResultset().then(function(search) {
+        var hasResultset = search.results.some(function(item) {
           return item.revision_hash === resultset[0].revision_hash;
         });
         assert.ok(hasResultset, 'saves item as a resultset');

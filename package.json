@@ -7,8 +7,8 @@
     "treeherder": "./bin/treeherder"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha *_test.js factory/*_test.js",
-    "doc": "./node_modules/.bin/grunt jsdoc"
+    "test": "mocha *_test.js factory/*_test.js",
+    "doc": "grunt jsdoc"
   },
   "repository": {
     "type": "git",
@@ -28,8 +28,7 @@
   },
   "homepage": "https://github.com/lightsofapollo/treeherder-node",
   "devDependencies": {
-    "mocha-as-promised": "~2.0.0",
-    "mocha": "~1.17.1",
+    "mocha": "~1.18.1",
     "nock": "~0.27.2",
     "uuid": "~1.4.1",
     "github-fixtures": "~0.2.0",
@@ -41,8 +40,8 @@
     "grunt-cli": "~0.1.13"
   },
   "dependencies": {
-    "github": "~0.1.14",
     "commander": "~2.1.0",
+    "github": "~0.1.14",
     "oauth": "~0.9.11",
     "promise": "~4.0.0",
     "superagent": "~0.16.0",
