@@ -1,6 +1,6 @@
 {
   "name": "mozilla-treeherder",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Treeherder client for mozilla's test reporting UI",
   "main": "project.js",
   "bin": {
