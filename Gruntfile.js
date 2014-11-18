@@ -1,3 +1,7 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, you can obtain one at http://mozilla.org/MPL/2.0/. */
+
 module.exports = function(grunt) {
   var docFiles = [
     'README.md',
@@ -6,7 +10,7 @@ module.exports = function(grunt) {
     'factory/github.js'
   ];
 
-  
+
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
