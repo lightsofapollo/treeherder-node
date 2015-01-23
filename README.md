@@ -11,7 +11,10 @@ var Project = require('mozilla-treeherder/project');
 // treeherder (jeads).
 var project = new Project('gaia', {
   consumerKey: '...',
-  consumerSecret: ''
+  consumerSecret: '',
+  // Disabled by default but will retry post / put requests if a 429 is
+  // returned.
+  throttleRetries: 2
 });
 ```
 

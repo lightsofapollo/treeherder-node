@@ -6,6 +6,7 @@ var assert = require('assert');
 var consts = require('./consts');
 var crypto = require('crypto');
 var request = require('superagent-promise');
+var debug = require('debug')('mozilla-treeherder:project');
 
 var Promise = require('promise');
 var OAuth = require('oauth').OAuth;
@@ -71,6 +72,47 @@ function handleResponse(res) {
   throw new HttpError(res);
 }
 
+function sleep(time) {
+  return new Promise(function(accept) {
+    setTimeout(accept, time);
+  });
+}
+
+/**
+Handles retries/sleeping when encountering throttling.
+
+@private
+*/
+function throttleDecorator(method) {
+  return function() {
+    var ctx = this;
+    var args = Array.prototype.slice.call(arguments);
+    var currentRetry = 0;
+
+    if (
+      typeof args[args.length - 1] === 'object' &&
+      args[args.length - 1].currentRetry
+    ) {
+      currentRetry = args[args.length - 1].currentRetry;
+    }
+
+    return method.apply(this, args).catch(function(err) {
+      if (err.status == 429 && ctx.throttleRetries) {
+        debug('Handling throttle...')
+        var sleepSeconds = parseInt(err.headers['x-throttle-wait-seconds'], 10);
+        args.push({ currentRetry: ++currentRetry });
+
+        debug('throttle', { sleepSeconds: sleepSeconds })
+        return sleep(sleepSeconds * 1000).then(function() {
+          debug('throttle run retry', currentRetry);
+          return method.apply(ctx, args);
+        });
+      }
+      throw err;
+    });
+  }
+}
+
 /**
 
 @example
@@ -85,6 +127,7 @@ var project = new Project('gaia', {
 @param {Object} config for project.
 @param {String} config.consumerKey for oauth.
 @param {String} config.consumerSecret also for oauth.
+@param {Number} [config.throttleRetries=0]
 @constructor
 @alias module:mozilla-treeherder/project
 */
@@ -95,6 +138,7 @@ function Project(project, config) {
   this.user = (config && config.user) || TREEHERDER_USER;
   var url = (config && config.baseUrl) || consts.baseUrl;
   this.url = url + 'project/' + project + '/';
+  this.throttleRetries = config.throttleRetries || 0;
 
   // generally oauth is only required for posting so don't require it for all
   // requests...
@@ -202,9 +246,9 @@ Project.prototype = {
   @param {Object} resultset full resultset object.
   @return {Promise<Object>}
   */
-  postResultset: function(resultset) {
+  postResultset: throttleDecorator(function(resultset) {
     return this.oauthRequest('POST', 'resultset/', resultset).then(handleResponse);
-  },
+  }),
 
   /**
   Fetch all the objectstore results for this project.
@@ -246,9 +290,9 @@ Project.prototype = {
   @param {Object} jobs collection.
   @see http://treeherder-dev.allizom.org/docs/#!/project/Jobs_post_4
   */
-  postJobs: function(jobs) {
+  postJobs: throttleDecorator(function(jobs) {
     return this.oauthRequest('POST', 'jobs/', jobs).then(handleResponse);
-  }
+  })
 
 };
 

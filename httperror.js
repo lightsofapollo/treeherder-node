@@ -38,11 +38,12 @@ function HttpError(response) {
   // inherit from the error object
   Error.call(this);
   // build nice human consumable stacks
-  Error.captureStackTrace(this, arguments.callee);
+  Error.captureStackTrace(this);
 
   this.name = 'treeherder-error';
   this.status = httpErr.status;
   this.method = httpErr.method;
+  this.headers = response.headers;
   this.path = httpErr.path;
 
   var traceback = '';
