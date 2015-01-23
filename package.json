@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/lightsofapollo/treeherder-node.git"
+    "url": "git://github.com/mozilla/treeherder-node.git"
   },
   "keywords": [
     "mozilla",
@@ -24,9 +24,9 @@
   "author": "James Lal [:lightsofapollo]",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lightsofapollo/treeherder-node/issues"
+    "url": "https://github.com/mozilla/treeherder-node/issues"
   },
-  "homepage": "https://github.com/lightsofapollo/treeherder-node",
+  "homepage": "https://github.com/mozilla/treeherder-node",
   "devDependencies": {
     "mocha": "~1.18.1",
     "nock": "~0.27.2",

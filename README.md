@@ -1,4 +1,4 @@
-# mozilla-treeherder [![Build Status](https://travis-ci.org/lightsofapollo/treeherder-node.png?branch=master)](https://travis-ci.org/lightsofapollo/treeherder-node)
+# mozilla-treeherder [![Build Status](https://travis-ci.org/mozilla/treeherder-node.png?branch=master)](https://travis-ci.org/mozilla/treeherder-node)
 
 NodeJS interface for [treeherder](https://treeherder.mozilla.org).
 
@@ -7,8 +7,8 @@ NodeJS interface for [treeherder](https://treeherder.mozilla.org).
 ```js
 var Project = require('mozilla-treeherder/project');
 
-// this configuration can be aquired from an ateam member working on
-// treeherder (jeads).
+// this configuration can be acquired from an ateam member working on
+// treeherder (mdoglio).
 var project = new Project('gaia', {
   consumerKey: '...',
   consumerSecret: '',
