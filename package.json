@@ -21,7 +21,7 @@
     "ui",
     "reporting"
   ],
-  "author": "James Lal [:lightsofapollo]",
+  "author": "Greg Arndt [:gregarndt]",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mozilla/treeherder-node/issues"
