@@ -16,11 +16,6 @@ var Promise = require('promise');
 var OAuth = require('oauth').OAuth;
 var HttpError = require('./httperror');
 
-/**
-@kind constant
-default treeherder user.
-*/
-var TREEHERDER_USER = 'treeherder-node ' + require('./package').version;
 
 function buildRequest(oauth, user, method, url, body) {
   // we need to directly sign the body since oauth node does not do this for us.
@@ -139,7 +134,7 @@ function Project(project, config) {
   assert(project, 'project is required');
 
   this.project = project;
-  this.user = (config && config.user) || TREEHERDER_USER;
+  this.user = (config && config.user) || project;
   var url = (config && config.baseUrl) || consts.baseUrl;
   this.url = url + 'project/' + project + '/';
   this.throttleRetries = config.throttleRetries || 0;
