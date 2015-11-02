@@ -10,8 +10,8 @@ var Project = require('mozilla-treeherder/project');
 // this configuration can be acquired from an ateam member working on
 // treeherder (mdoglio).
 var project = new Project('gaia', {
-  consumerKey: '...',
-  consumerSecret: '',
+  clientId: '...',
+  secret: '',
   // Disabled by default but will retry post / put requests if a 429 is
   // returned.
   throttleRetries: 2
@@ -30,7 +30,7 @@ See all the options with:
 
 [treeherder-service](https://github.com/mozilla/treeherder-service) api errors will
 include a traceback from the server. Most times these errors are simply
-something you did wrong (no oauth credentials, wrong parameters, etc...)
+something you did wrong (no hawk credentials, wrong parameters, etc...)
 but there are times when there are actually bugs in treeherder... Submit
 an [issue](https://bugzilla.mozilla.org/enter_bug.cgi?product=Tree%20Management&component=Treeherder) with the traceback.
 
