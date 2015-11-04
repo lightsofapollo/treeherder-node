@@ -16,8 +16,6 @@ suite('project', function() {
   }
 
   function buildNock(path) {
-    // remove the oauth credentials (we can't really verify this works 100%
-    // anyway...)
     return nock(subject.url).filteringPath(/\?(.*)/, '');
   }
 
@@ -30,9 +28,11 @@ suite('project', function() {
   });
 
   setup(function() {
+    // NOTE: This does not test against a live treeherder instance, so credentials
+    // are merely for testing logic
     subject = new Project(PROJECT_NAME, {
-      consumerKey: '3d3809b2-f656-4e24-ac10-3590e5cc4214',
-      consumerSecret: 'e5dfb0b2-6559-4216-864b-bb87b51b4e10'
+      clientId: '3d3809b2-f656-4e24-ac10-3590e5cc4214',
+      secret: 'e5dfb0b2-6559-4216-864b-bb87b51b4e10'
     });
   });
 
@@ -149,7 +149,7 @@ suite('project', function() {
     });
   });
 
-  test('attempt to issue post without oauth', function() {
+  test('attempt to issue post without credentials', function() {
     var subject = new Project(PROJECT_NAME, {});
 
     return subject.postResultset().catch(function(err) {

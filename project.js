@@ -13,50 +13,24 @@ var request = require('superagent-promise');
 var debug = require('debug')('mozilla-treeherder:project');
 
 var Promise = require('promise');
-var OAuth = require('oauth').OAuth;
+var hawk = require('hawk');
 var HttpError = require('./httperror');
+var utf8 = require('utf8');
 
-
-function buildRequest(oauth, user, method, url, body) {
-  // we need to directly sign the body since oauth node does not do this for us.
+function buildRequest(credentials, user, method, url, body) {
   body = JSON.stringify(body || '');
 
-  var queryParams = oauth._prepareParameters(
-    null, // no tokens in 2 legged oauth
-    null, // ^
-    method,
-    url,
-    /**
+  var payload = {
+    credentials: credentials,
+    contentType: 'application/json',
+    payload: utf8.encode(body)
+  };
 
-    */
-    {
-      // future book keeping for treeherder not sure what it's going to be used
-      // for...
-      user: user,
-
-      // node oauth does not provide body hasing but its easy to do so... its
-      // always sha1 as far as I can tell (at least the server only cares about
-      // sha1)
-      oauth_body_hash: crypto.createHash('sha1').update(body).digest('base64'),
-
-      // per http://tools.ietf.org/html/rfc5849#section-2.1 it must be empty if
-      // not used to indicate two legged oauth...
-      oauth_token: ''
-    }
-  );
-
+  var header = hawk.client.header(url, method.toUpperCase(), payload);
   var req = request(method, url).
     set('Content-Type', 'application/json').
+    set('Authorization', header.field).
     send(body);
-
-  // map the query parameters in order into an object
-  var query = {};
-  queryParams.reduce(function(result, value) {
-    result[value[0]] = value[1];
-    return result;
-  }, query);
-
-  req.query(query);
 
   // return a promise for the result...
   return req.end();
@@ -124,8 +98,8 @@ var project = new Project('gaia', {
 
 @param {String} project name.
 @param {Object} config for project.
-@param {String} config.consumerKey for oauth.
-@param {String} config.consumerSecret also for oauth.
+@param {String} config.clientId for hawk.
+@param {String} config.secret also for hawk.
 @param {Number} [config.throttleRetries=0]
 @constructor
 @alias module:mozilla-treeherder/project
@@ -139,46 +113,36 @@ function Project(project, config) {
   this.url = url + 'project/' + project + '/';
   this.throttleRetries = config.throttleRetries || 0;
 
-  // generally oauth is only required for posting so don't require it for all
+  // generally authenticated requests are only required for posting so don't require it for all
   // requests...
-  if (
-    config &&
-    config.consumerKey &&
-    config.consumerSecret
-  ) {
-    // https://github.com/ciaranj/node-oauth/blob/171e668f386a3e1ba0bcb915b8dc7fdc9335aa62/lib/oauth.js#L9
-    this.oauth = new OAuth(
-      null, // 2 legged oauth has no urls
-      null, // ^
-      config.consumerKey, // per project key
-      config.consumerSecret, // per project secret
-      '1.0', // oauth version
-      null, // no callbacks in 2 legged oauth
-      'HMAC-SHA1' // signature type expected by the treeherder server.
-    );
-
+  if ( config && config.clientId && config.secret) {
+    this.credentials = {
+        id: config.clientId,
+        key: config.secret,
+        algorithm: 'sha256'
+    };
   }
 }
 
 Project.prototype = {
   /**
-  Issue a project specific api request with oauth credentials.
+  Issue a project specific api request with hawk credentials.
 
   @param {String} method http method type.
   @param {String} path the subpath in the project.
   @param {Object} body of the http request.
   @return {Promise<Object>}
   */
-  oauthRequest: function(method, path, body) {
+  authRequest: function(method, path, body) {
     return new Promise(function(accept, reject) {
-      if (!this.oauth) {
+      if (!this.credentials) {
         return reject(
-          new Error('Cannot issue secured request without consumerKey and consumerSecret')
+          new Error('Cannot issue secured request without client ID and secret')
         );
       }
 
       buildRequest(
-        this.oauth,
+        this.credentials,
         this.user,
         method,
         this.url + path,
@@ -246,7 +210,7 @@ Project.prototype = {
   @return {Promise<Object>}
   */
   postResultset: throttleDecorator(function(resultset) {
-    return this.oauthRequest('POST', 'resultset/', resultset).then(handleResponse);
+    return this.authRequest('POST', 'resultset/', resultset).then(handleResponse);
   }),
 
   /**
@@ -290,7 +254,7 @@ Project.prototype = {
   @see http://treeherder-dev.allizom.org/docs/#!/project/Jobs_post_4
   */
   postJobs: throttleDecorator(function(jobs) {
-    return this.oauthRequest('POST', 'jobs/', jobs).then(handleResponse);
+    return this.authRequest('POST', 'jobs/', jobs).then(handleResponse);
   })
 
 };
