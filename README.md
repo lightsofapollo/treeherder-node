@@ -28,35 +28,12 @@ See all the options with:
 
 ## Reporting Treeherder bugs
 
-[treeherder-service](https://github.com/mozilla/treeherder-service) api errors will
+[treeherder](https://github.com/mozilla/treeherder) api errors will
 include a traceback from the server. Most times these errors are simply
 something you did wrong (no hawk credentials, wrong parameters, etc...)
 but there are times when there are actually bugs in treeherder... Submit
 an [issue](https://bugzilla.mozilla.org/enter_bug.cgi?product=Tree%20Management&component=Treeherder) with the traceback.
 
-Example error message (send as a promise rejection usually)
-
-```
-     treeherder-error: [GET /api/project/gaia/jobs/ 500] [Errno 5] Input/output error
-
-     Treeherder traceback:
-       Traceback (most recent call last):
-         File "/home/vagrant/treeherder-service/treeherder/webapp/api/views.py", line 126, in use_jobs_model
-           return model_func(*args, jm=jm, **kwargs)
-         File "/home/vagrant/treeherder-service/treeherder/webapp/api/views.py", line 320, in list
-           objs = jm.get_job_list(offset, count, full, filter.conditions)
-         File "/home/vagrant/treeherder-service/treeherder/model/derived/jobs.py", line 154, in get_job_list
-           debug_show=self.DEBUG,
-         File "/home/vagrant/treeherder-service/vendor/datasource/bases/RDBSHub.py", line 71, in wrapper
-           return func(self, **kwargs)
-         File "/home/vagrant/treeherder-service/vendor/datasource/bases/SQLHub.py", line 136, in execute
-           return self.__execute(sql, kwargs)
-         File "/home/vagrant/treeherder-service/vendor/datasource/bases/SQLHub.py", line 298, in __execute
-           tmsg)
-         File "/home/vagrant/treeherder-service/vendor/datasource/bases/RDBSHub.py", line 436, in show_debug
-           sys.stdout.write( unicode(msg).encode("utf-8") )
-       IOError: [Errno 5] Input/output error
-```
 
 ## Tests
 
