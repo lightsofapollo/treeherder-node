@@ -28,6 +28,7 @@ function buildRequest(credentials, user, method, url, body) {
 
   var header = hawk.client.header(url, method.toUpperCase(), payload);
   var req = request(method, url).
+    set('User-Agent', consts.userAgent).
     set('Content-Type', 'application/json').
     set('Authorization', header.field).
     send(body);
@@ -166,6 +167,9 @@ Project.prototype = {
     return request(
       method,
       this.url + path
+    ).set(
+      'User-Agent',
+      consts.userAgent
     ).end();
   },
 
